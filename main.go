@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
+	"hertz/internal/router"
 	"hertz/pkg/config"
 	"hertz/pkg/log"
-	"hertz/router"
 )
 
 func Init() error {
@@ -25,5 +25,5 @@ func main() {
 	}
 	engine := router.Init()
 
-	engine.Spin()
+	engine.Run()
 }
