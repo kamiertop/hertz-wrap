@@ -13,22 +13,11 @@ import (
 	"encoding/base64"
 	"net/http"
 	"strconv"
-	"unsafe"
 
 	"github.com/cloudwego/hertz/pkg/app"
+
+	"hertz/pkg/utils"
 )
-
-// StringToBytes converts string to byte slice without a memory allocation.
-// For more details, see https://github.com/golang/go/issues/53003#issuecomment-1140276077.
-func StringToBytes(s string) []byte {
-	return unsafe.Slice(unsafe.StringData(s), len(s))
-}
-
-// BytesToString converts byte slice to string without a memory allocation.
-// For more details, see https://github.com/golang/go/issues/53003#issuecomment-1140276077.
-func BytesToString(b []byte) string {
-	return unsafe.String(unsafe.SliceData(b), len(b))
-}
 
 // AuthUserKey is the cookie name for user credential in basic auth.
 const AuthUserKey = "user"
@@ -48,7 +37,7 @@ func (a authPairs) searchCredential(authValue string) (string, bool) {
 		return "", false
 	}
 	for _, pair := range a {
-		if subtle.ConstantTimeCompare(StringToBytes(pair.value), StringToBytes(authValue)) == 1 {
+		if subtle.ConstantTimeCompare(utils.StringToBytes(pair.value), utils.StringToBytes(authValue)) == 1 {
 			return pair.user, true
 		}
 	}
@@ -101,5 +90,5 @@ func processAccounts(accounts Accounts) authPairs {
 
 func authorizationHeader(user, password string) string {
 	base := user + ":" + password
-	return "Basic " + base64.StdEncoding.EncodeToString(StringToBytes(base))
+	return "Basic " + base64.StdEncoding.EncodeToString(utils.StringToBytes(base))
 }
