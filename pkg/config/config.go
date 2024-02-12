@@ -1,8 +1,8 @@
 package config
 
-var Conf Config
+var Conf config
 
-type Config struct {
+type config struct {
 	Log    Log    `toml:"log"`
 	System System `toml:"system"`
 }
@@ -18,10 +18,14 @@ type System struct {
 
 func InitConfig() error {
 
+	setDefaultConfig()
 	return nil
 }
 
-// defaultConf set default value if not sets
-func defaultConf() {
+// setDefaultConfig set default value if not sets
+func setDefaultConfig() {
+	if Conf.System.Env == "" {
+		Conf.System.Env = "development"
+	}
 
 }
