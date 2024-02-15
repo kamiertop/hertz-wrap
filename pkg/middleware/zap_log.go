@@ -25,13 +25,20 @@ func Logger() app.HandlerFunc {
 		ctx.Next(c)
 		cost := time.Since(s)
 		logMsg = append(logMsg, zap.String("cost", cost.String()))
-		if ctx.Response.StatusCode() == consts.StatusOK {
+		if string(ctx.Method()) == consts.MethodPost {
+			ctx.Request.PostArgString()
+			if v := ctx.Request.PostArgs().String(); v != "" {
+				logMsg = append(logMsg, zap.String("post", v))
+			}
+		}
+		switch ctx.Response.StatusCode() {
+		case consts.StatusOK:
 			if cost.Seconds() > _execTimeout {
 				log.Warn(ctx.Request.URI().String(), logMsg...)
 			} else {
 				log.Info(ctx.Request.URI().String(), logMsg...)
 			}
-		} else {
+		default:
 			log.Error(ctx.Request.URI().String(), logMsg...)
 		}
 	}
