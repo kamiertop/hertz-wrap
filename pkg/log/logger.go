@@ -76,12 +76,12 @@ func level() zap.AtomicLevel {
 
 func consoleEncoder() zapcore.EncoderConfig {
 	return zapcore.EncoderConfig{
-		MessageKey:     "msg",
-		LevelKey:       "level",
-		TimeKey:        "ts",
-		NameKey:        "name",
-		CallerKey:      "caller",
-		FunctionKey:    "fn",
+		MessageKey: "msg",
+		LevelKey:   "level",
+		TimeKey:    "ts",
+		NameKey:    "name",
+		CallerKey:  "caller",
+		//FunctionKey:    "fn",
 		StacktraceKey:  "st",
 		SkipLineEnding: false,
 		LineEnding:     "",
