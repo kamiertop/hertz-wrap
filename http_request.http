@@ -1,0 +1,13 @@
+###
+POST http://localhost:8888/ping
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "xl",
+  "data": {
+    "age": 20
+  }
+}
+
+###
