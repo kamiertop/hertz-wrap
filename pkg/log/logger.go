@@ -22,7 +22,7 @@ var Logger = new(zap.Logger)
 // InitLogger Set default logger and global zap logger
 func InitLogger() {
 	var cores []zlog.CoreConfig
-	if config.Conf.System.Env == consts.DevelopmentMode {
+	if config.Cfg().System.Env == consts.DevelopmentMode {
 		cores = append(cores, zlog.CoreConfig{
 			Enc: zapcore.NewConsoleEncoder(consoleEncoder()),
 			Ws:  zapcore.AddSync(stdWriter()),
@@ -44,7 +44,7 @@ func InitLogger() {
 
 func fileWriter() io.Writer {
 	return &lumberjack.Logger{
-		Filename:   config.Conf.Log.FileName,
+		Filename:   config.Cfg().Log.FileName,
 		MaxSize:    20,   // A file can be up to 20M.
 		MaxBackups: 5,    // Save up to 5 files at the same time.
 		MaxAge:     10,   // A file can exist for a maximum of 10 days.
@@ -58,7 +58,7 @@ func stdWriter() io.Writer {
 
 func level() zap.AtomicLevel {
 	l := zap.NewAtomicLevel() // default level is InfoLevel
-	switch strings.ToLower(config.Conf.Log.Level) {
+	switch strings.ToLower(config.Cfg().Log.Level) {
 	case "debug":
 		l.SetLevel(zapcore.DebugLevel)
 	case "info":

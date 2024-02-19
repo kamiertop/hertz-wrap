@@ -1,8 +1,19 @@
 package config
 
-var Conf config
+import (
+	"sync/atomic"
 
-type config struct {
+	"hertz/pkg/consts"
+)
+
+// conf concurrent safe
+var conf = new(atomic.Value)
+
+func Cfg() Config {
+	return conf.Load().(Config)
+}
+
+type Config struct {
 	Log    Log    `toml:"log"`
 	System System `toml:"system"`
 }
@@ -17,15 +28,17 @@ type System struct {
 }
 
 func InitConfig() error {
-
+	conf.Store(Config{})
 	setDefaultConfig()
 	return nil
 }
 
 // setDefaultConfig set default value if not sets
 func setDefaultConfig() {
-	if Conf.System.Env == "" {
-		Conf.System.Env = "development"
+	if Cfg().System.Env == "" {
+		t := Cfg()
+		t.System.Env = consts.DevelopmentMode
+		conf.Store(t)
 	}
 
 }
