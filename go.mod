@@ -12,6 +12,7 @@ require (
 replace google.golang.org/protobuf v1.32.0 => github.com/golang/protobuf v1.5.0
 
 require (
+	github.com/BurntSushi/toml v1.3.2 // indirect
 	github.com/bytedance/go-tagexpr/v2 v2.9.2 // indirect
 	github.com/bytedance/gopkg v0.0.0-20220413063733-65bf48ffb3a7 // indirect
 	github.com/bytedance/sonic v1.10.1 // indirect

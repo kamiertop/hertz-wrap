@@ -1,8 +1,14 @@
 package config
 
 import (
+	"flag"
+
+	"github.com/BurntSushi/toml"
+
 	"hertz/pkg/consts"
 )
+
+var configFile = flag.String("config", "config.toml", "config file location")
 
 var Conf config
 
@@ -21,6 +27,12 @@ type System struct {
 }
 
 func InitConfig() error {
+	flag.Parse()
+	_, err := toml.DecodeFile(*configFile, &Conf)
+	if err != nil {
+		return err
+	}
+
 	setDefaultConfig()
 	return nil
 }
