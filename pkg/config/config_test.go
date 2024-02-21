@@ -12,5 +12,5 @@ func TestInitConfig(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	assert.Equal(t, "info", Conf.Log.Level)
+	assert.Equal(t, "12424", Conf.System.Port)
 }

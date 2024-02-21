@@ -23,7 +23,8 @@ type Log struct {
 }
 
 type System struct {
-	Env string `toml:"env"`
+	Env  string `toml:"env"`
+	Port string `toml:"port"`
 }
 
 func InitConfig() error {
