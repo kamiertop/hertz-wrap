@@ -2,19 +2,27 @@ package router
 
 import (
 	"context"
+	"flag"
 	"net/http"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
 
+	"hertz/internal/metrics"
 	"hertz/pkg/consts"
 	"hertz/pkg/middleware"
 )
 
+var enablePprof = flag.Bool("pprof", false, "open/close pprof")
+
 func Init() *server.Hertz {
+	flag.Parse()
 	h := server.New()
 	// use middleware
+	if *enablePprof {
+		metrics.Init(h)
+	}
 	h.Use(
 		recovery.Recovery(),
 		middleware.Logger(),

@@ -1,0 +1,13 @@
+linters:
+
+  enable:
+    - megacheck
+    - govet
+
+  disable:
+    - maligned
+    - prealloc
+  presets:
+    - bugs
+    - unused
+  fast: false
