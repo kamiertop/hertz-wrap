@@ -9,6 +9,8 @@ import (
 	"github.com/hertz-contrib/pprof/adaptor"
 )
 
+// Init register pprof, steal from Hertz
+// Use middleware conveniently and better routing group control.
 func Init(h *server.Hertz) {
 	g := h.Group("debug/pprof")
 	g.GET("/", wrapPprof(pprof.Index))
