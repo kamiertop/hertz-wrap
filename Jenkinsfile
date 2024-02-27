@@ -6,7 +6,7 @@ pipeline {
         stage('build code') {
             steps {
                 echo "start build project"
-                sh "go version"
+                sh 'go version'
             }
         }
         stage('test code') {
