@@ -10,3 +10,6 @@ linters:
     - bugs
     - unused
   fast: false
+
+run:
+  concurrency: 5
