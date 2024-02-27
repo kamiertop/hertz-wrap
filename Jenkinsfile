@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('build code') {
             agent {
-                docker {image 'golang:1.22'}
+                docker {image 'golang:latest'}
             }
             steps {
                 echo "start build project"
