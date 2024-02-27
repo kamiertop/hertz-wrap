@@ -4,6 +4,9 @@ pipeline {
     // 定义流水线的加工流程, 流水线的所有阶段
     stages {
         stage('build code') {
+            agent {
+                docker {image 'golang:1.22'}
+            }
             steps {
                 echo "start build project"
                 sh 'go version'
