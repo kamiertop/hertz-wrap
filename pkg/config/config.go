@@ -43,5 +43,4 @@ func setDefaultConfig() {
 	if Conf.System.Env == "" {
 		Conf.System.Env = consts.DevelopmentMode
 	}
-
 }

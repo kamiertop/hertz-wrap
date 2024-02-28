@@ -81,7 +81,7 @@ func consoleEncoder() zapcore.EncoderConfig {
 		TimeKey:    "ts",
 		NameKey:    "name",
 		CallerKey:  "caller",
-		//FunctionKey:    "fn",
+		// FunctionKey:    "fn",
 		StacktraceKey:  "st",
 		SkipLineEnding: false,
 		LineEnding:     "",
