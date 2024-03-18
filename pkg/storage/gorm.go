@@ -14,7 +14,7 @@ func InitGorm() error {
 		NamingStrategy: schema.NamingStrategy{},
 	})
 	if err != nil {
-		return fmt.Errorf("open gorm db error: %v", err)
+		return fmt.Errorf("open gorm db error: %w", err)
 	}
 
 	return nil

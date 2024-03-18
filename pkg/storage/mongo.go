@@ -13,11 +13,11 @@ import (
 func InitMongo() error {
 	client, err := mongo.Connect(context.Background(), &options.ClientOptions{})
 	if err != nil {
-		return fmt.Errorf("connect mongo error: %v", err)
+		return fmt.Errorf("connect mongo error: %w", err)
 	}
 
 	if err = client.Ping(context.Background(), readpref.Primary()); err != nil {
-		return fmt.Errorf("ping mongo error: %v", err)
+		return fmt.Errorf("ping mongo error: %w", err)
 	}
 
 	return nil
