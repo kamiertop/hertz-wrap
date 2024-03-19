@@ -32,6 +32,7 @@ func Logger() app.HandlerFunc {
 		logMsg = append(logMsg,
 			zap.String("cost", cost.String()),
 			zap.Int("status", c.Response.StatusCode()),
+			zap.String("handler", c.FullPath()),
 			zap.String("agent", utils.BytesToString(c.UserAgent())))
 		switch c.Response.StatusCode() {
 		case http.StatusOK:
