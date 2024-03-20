@@ -21,6 +21,7 @@ const _execTimeout = 1
 func Logger() app.HandlerFunc {
 	return func(ctx context.Context, c *app.RequestContext) {
 		logMsg := []zap.Field{
+			zap.String("method", utils.BytesToString(c.Request.Method())),
 			zap.String("route", c.FullPath()),
 			zap.String("ip", c.RemoteAddr().String()),
 		}
