@@ -3,10 +3,11 @@ linters:
     - megacheck
     - govet
     - gofumpt
-
+    - nilnil
   disable:
     - maligned
     - prealloc
+    - errchkjson
   presets:
     - bugs
     - unused
@@ -16,6 +17,11 @@ linters-settings:
   gofumpt:
     module-path: hertz
     extra-rules: true
+  staticcheck:
+    checks: [
+      "all",
+      "-SA5008"
+    ]
 
 run:
   concurrency: 5
