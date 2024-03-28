@@ -18,6 +18,7 @@ var enablePprof = flag.Bool("pprof", false, "open/close pprof")
 
 func Init() *server.Hertz {
 	flag.Parse()
+
 	h := server.New()
 	// use middleware
 	if *enablePprof {

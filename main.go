@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"hertz/internal/router"
 	"hertz/pkg/config"
@@ -22,6 +23,7 @@ func Init() error {
 func main() {
 	if err := Init(); err != nil {
 		fmt.Printf("init server failed, err: %v\n", err)
+		os.Exit(1)
 	}
 	engine := router.Init()
 

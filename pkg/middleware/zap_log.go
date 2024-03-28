@@ -23,7 +23,6 @@ func Logger() app.HandlerFunc {
 		logMsg := []zap.Field{
 			zap.String("method", utils.BytesToString(c.Request.Method())),
 			zap.String("route", c.FullPath()),
-			zap.String("ip", c.RemoteAddr().String()),
 		}
 		logMsg = requestArg(c, logMsg)
 		s := time.Now()
@@ -31,9 +30,10 @@ func Logger() app.HandlerFunc {
 		cost := time.Since(s)
 
 		logMsg = append(logMsg,
-			zap.String("cost", cost.String()),
 			zap.Int("status", c.Response.StatusCode()),
+			zap.String("cost", cost.String()),
 			zap.String("handler", c.FullPath()),
+			zap.String("ip", c.RemoteAddr().String()),
 			zap.String("agent", utils.BytesToString(c.UserAgent())))
 		switch c.Response.StatusCode() {
 		case http.StatusOK:
@@ -70,9 +70,8 @@ func requestArg(c *app.RequestContext, logMsg []zap.Field) []zap.Field {
 				}
 			}
 		}
-	case http.MethodDelete:
+	case http.MethodDelete, http.MethodPatch:
 	case http.MethodPut:
-	case http.MethodPatch:
 	default:
 
 	}

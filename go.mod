@@ -9,6 +9,7 @@ require (
 	github.com/hertz-contrib/keyauth v0.0.0-20221011055545-d02ab20cb1ca
 	github.com/hertz-contrib/logger/zap v1.1.0
 	github.com/hertz-contrib/pprof v0.1.2
+	github.com/jmoiron/sqlx v1.3.5
 	github.com/redis/go-redis/v9 v9.5.1
 	github.com/stretchr/testify v1.8.4
 	go.mongodb.org/mongo-driver v1.14.0
