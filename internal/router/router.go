@@ -46,7 +46,7 @@ func initRouter(h *server.Hertz) {
 	})
 
 	h.GET("/", adaptor.NewHertzHTTPHandler(http.FileServer(http.FS(web.IndexHtml))))
-	h.GET("/*filepath", adaptor.NewHertzHTTPHandler(http.FileServerFS(web.Dist)))
+	h.GET("/static/*filepath", adaptor.NewHertzHTTPHandler(http.FileServerFS(web.Dist)))
 	h.POST("/ping", func(_ context.Context, c *app.RequestContext) {
 		var m map[string]any
 		if err := c.BindJSON(&m); err != nil {
