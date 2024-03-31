@@ -8,10 +8,12 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/hertz-contrib/pprof/adaptor"
 
 	"hertz/internal/metrics"
 	"hertz/pkg/consts"
 	"hertz/pkg/middleware"
+	"hertz/web"
 )
 
 var enablePprof = flag.Bool("pprof", false, "open/close pprof")
@@ -42,6 +44,9 @@ func initRouter(h *server.Hertz) {
 	h.GET("/ping", func(_ context.Context, c *app.RequestContext) {
 		c.String(http.StatusOK, "pong")
 	})
+
+	h.GET("/", adaptor.NewHertzHTTPHandler(http.FileServer(http.FS(web.IndexHtml))))
+	h.GET("/*filepath", adaptor.NewHertzHTTPHandler(http.FileServerFS(web.Dist)))
 	h.POST("/ping", func(_ context.Context, c *app.RequestContext) {
 		var m map[string]any
 		if err := c.BindJSON(&m); err != nil {
