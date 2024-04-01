@@ -45,8 +45,8 @@ func initRouter(h *server.Hertz) {
 		c.String(http.StatusOK, "pong")
 	})
 
-	h.GET("/", adaptor.NewHertzHTTPHandler(http.FileServer(http.FS(web.IndexHtml))))
-	h.GET("/static/*filepath", adaptor.NewHertzHTTPHandler(http.FileServerFS(web.Dist)))
+	h.GET("/", header, adaptor.NewHertzHTTPHandler(http.FileServer(http.FS(web.IndexHtml))))
+	h.GET("/static/*filepath", header, adaptor.NewHertzHTTPHandler(http.FileServerFS(web.Dist)))
 	h.POST("/ping", func(_ context.Context, c *app.RequestContext) {
 		var m map[string]any
 		if err := c.BindJSON(&m); err != nil {
@@ -63,3 +63,8 @@ func noRoute(_ context.Context, c *app.RequestContext) {}
 
 // noMethod Custom implementations if don't want use default
 func noMethod(_ context.Context, c *app.RequestContext) {}
+
+func header(_ context.Context, c *app.RequestContext) {
+	c.Request.Header.Add("Content-Type", "text/html; charset=utf-8")
+	c.Header("Content-Type", "text/html; charset=utf-8")
+}

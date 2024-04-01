@@ -63,7 +63,8 @@ func requestArg(c *app.RequestContext, logMsg []zap.Field) []zap.Field {
 		}
 	case http.MethodPost:
 		if body := c.Request.Body(); body != nil {
-			if utils.BytesToString(c.GetHeader(consts.HeaderContentType)) == consts.MIMEApplicationJSON {
+			ct := utils.BytesToString(c.GetHeader(consts.HeaderContentType))
+			if ct == consts.MIMEApplicationJSON || ct == consts.MIMEApplicationJSONUTF8 {
 				var b map[string]any
 				if err := json.Unmarshal(body, &b); err == nil {
 					logMsg = append(logMsg, zap.Any("body", b))
