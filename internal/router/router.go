@@ -8,9 +8,11 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/hertz-contrib/pprof/adaptor"
 
 	"hertz/internal/metrics"
+	"hertz/pkg/config"
 	"hertz/pkg/consts"
 	"hertz/pkg/middleware"
 	"hertz/web"
@@ -20,8 +22,10 @@ var enablePprof = flag.Bool("pprof", false, "open/close pprof")
 
 func Init() *server.Hertz {
 	flag.Parse()
-
-	h := server.New()
+	hlog.SetSilentMode(true)
+	h := server.New(
+		server.WithHostPorts(config.Conf.System.Addr),
+	)
 	// use middleware
 	if *enablePprof {
 		metrics.Init(h)

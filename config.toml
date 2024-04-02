@@ -3,5 +3,5 @@ level = "info"
 filename = "api.log"
 
 [system]
-port = "12424"
+addr = ":12424"
 env = ""

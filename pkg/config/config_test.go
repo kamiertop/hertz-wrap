@@ -12,5 +12,5 @@ func TestInitConfig(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	assert.Equal(t, "12424", Conf.System.Port)
+	assert.Equal(t, "12424", Conf.System.Addr)
 }
