@@ -1,0 +1,29 @@
+name: build and release
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'tag/version'
+        required: true
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+run-name: 'version: ${{inputs.tag}}'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: set up go env
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22.0'
+          check-latest: false
+          cache-dependency-path: go.sum
+
+      - name: build
+        run: CGO_ENABLED=0 go build -o hertz-wrap main.go
