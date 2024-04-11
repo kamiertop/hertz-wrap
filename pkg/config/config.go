@@ -2,15 +2,18 @@ package config
 
 import (
 	"flag"
+	"fmt"
 
-	"github.com/BurntSushi/toml"
-
-	"hertz/pkg/consts"
+	"github.com/mitchellh/mapstructure"
+	"github.com/spf13/viper"
 )
 
 var configFile = flag.String("config", "config.toml", "config file location")
 
-var Conf config
+var (
+	Conf config
+	V    *viper.Viper
+)
 
 type config struct {
 	Log    Log    `toml:"log"`
@@ -29,18 +32,21 @@ type System struct {
 
 func InitConfig() error {
 	flag.Parse()
-	_, err := toml.DecodeFile(*configFile, &Conf)
-	if err != nil {
-		return err
+	V = viper.New()
+	V.SetConfigFile(*configFile)
+	if err := V.ReadInConfig(); err != nil {
+		return fmt.Errorf("read config file failed, err: %w", err)
 	}
 
-	setDefaultConfig()
+	if err := V.Unmarshal(&Conf, func(config *mapstructure.DecoderConfig) {
+		config.TagName = "toml"
+	}); err != nil {
+		return fmt.Errorf("init config failed, unmarshal error: %w", err)
+	}
+	fmt.Printf("init config success, env: %#v\n", Conf)
 	return nil
 }
 
-// setDefaultConfig set default value if not sets
-func setDefaultConfig() {
-	if Conf.System.Env == "" {
-		Conf.System.Env = consts.DevelopmentMode
-	}
+func RewriteConfig() error {
+	return V.WriteConfig()
 }

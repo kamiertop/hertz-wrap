@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 
@@ -10,6 +11,7 @@ import (
 )
 
 func Init() error {
+	flag.Parse()
 	// config
 	if err := config.InitConfig(); err != nil {
 		return err
