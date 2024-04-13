@@ -13,11 +13,11 @@ import (
 func Init() error {
 	flag.Parse()
 	// config
-	if err := config.InitConfig(); err != nil {
+	if err := config.Init(); err != nil {
 		return err
 	}
 	// logger
-	log.InitLogger()
+	log.Init()
 
 	return nil
 }

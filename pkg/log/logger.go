@@ -19,8 +19,8 @@ import (
 
 var Logger = new(zap.Logger)
 
-// InitLogger Set default logger and global zap logger
-func InitLogger() {
+// Init Set default logger and global zap logger
+func Init() {
 	var cores []zlog.CoreConfig
 	if config.Conf.System.Env == consts.DevelopmentMode {
 		cores = append(cores, zlog.CoreConfig{
@@ -69,6 +69,8 @@ func level() zap.AtomicLevel {
 		l.SetLevel(zapcore.ErrorLevel)
 	case "panic":
 		l.SetLevel(zapcore.PanicLevel)
+	default:
+		l.SetLevel(zapcore.InfoLevel)
 	}
 
 	return l
@@ -124,6 +126,10 @@ func Debug(msg string, fields ...zapcore.Field) {
 
 func Info(msg string, fields ...zapcore.Field) {
 	Logger.Info(msg, fields...)
+}
+
+func Fatal(msg string, fields ...zapcore.Field) {
+	Logger.Fatal(msg, fields...)
 }
 
 func Infof(format string, v ...any) {

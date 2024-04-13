@@ -30,8 +30,7 @@ type System struct {
 	Addr string `toml:"addr"`
 }
 
-func InitConfig() error {
-	flag.Parse()
+func Init() error {
 	V = viper.New()
 	V.SetConfigFile(*configFile)
 	if err := V.ReadInConfig(); err != nil {

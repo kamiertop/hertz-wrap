@@ -10,8 +10,8 @@ import (
 )
 
 func TestInitLogger(t *testing.T) {
-	_ = config.InitConfig()
-	InitLogger()
+	_ = config.Init()
+	Init()
 	hlog.Info("info level")
 	Info("info level")
 	Info("info level with field", zap.String("string type", "string value"))

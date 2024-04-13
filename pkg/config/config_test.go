@@ -8,7 +8,7 @@ import (
 
 func TestInitConfig(t *testing.T) {
 	// go test pkg/config/*.go -config=$(pwd)/config.toml
-	if err := InitConfig(); err != nil {
+	if err := Init(); err != nil {
 		t.Fatal(err)
 	}
 
