@@ -13,8 +13,8 @@ import (
 
 	"hertz/internal/metrics"
 	"hertz/pkg/config"
-	"hertz/pkg/consts"
 	"hertz/pkg/middleware"
+	"hertz/pkg/resp"
 	"hertz/web"
 )
 
@@ -54,19 +54,19 @@ func initRouter(h *server.Hertz) {
 	h.POST("/ping", func(_ context.Context, c *app.RequestContext) {
 		var m map[string]any
 		if err := c.BindJSON(&m); err != nil {
-			consts.BadRequest(c, err)
+			resp.BadRequest(c, err)
 			return
 		}
 
-		consts.SuccessData(c, m)
+		resp.SuccessData(c, m)
 	})
 }
 
 // noRoute Custom implementations if don't want use default
-func noRoute(_ context.Context, c *app.RequestContext) {}
+func noRoute(_ context.Context, _ *app.RequestContext) {}
 
 // noMethod Custom implementations if don't want use default
-func noMethod(_ context.Context, c *app.RequestContext) {}
+func noMethod(_ context.Context, _ *app.RequestContext) {}
 
 func header(_ context.Context, c *app.RequestContext) {
 	c.Request.Header.Add("Content-Type", "text/html; charset=utf-8")
