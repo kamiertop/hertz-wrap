@@ -1,6 +1,7 @@
-package consts
+package resp
 
 import (
+	stderr "errors"
 	"net/http"
 
 	"github.com/cloudwego/hertz/pkg/app"
@@ -40,6 +41,19 @@ func BadRequest(c *app.RequestContext, err error) {
 
 	c.Errors = append(c.Errors, &errors.Error{
 		Err:  err,
+		Type: errors.ErrorTypeAny,
+		Meta: _errParam,
+	})
+}
+
+func BadReqStr(c *app.RequestContext, msg string) {
+	c.JSON(consts.StatusBadRequest, resp{
+		_msg: _errParam,
+		_err: stderr.New(msg),
+	})
+
+	c.Errors = append(c.Errors, &errors.Error{
+		Err:  stderr.New(msg),
 		Type: errors.ErrorTypeAny,
 		Meta: _errParam,
 	})
