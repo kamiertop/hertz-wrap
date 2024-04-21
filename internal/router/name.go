@@ -17,6 +17,6 @@ func GetRouteName(method, path string) (string, bool) {
 	return name, b
 }
 
-func GetRouteTable() map[string]string {
+func GetRouteTable() map[[2]string]string {
 	return maps.Clone(routeTable)
 }
