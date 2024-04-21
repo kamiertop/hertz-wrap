@@ -72,3 +72,12 @@ func header(_ context.Context, c *app.RequestContext) {
 	c.Request.Header.Add("Content-Type", "text/html; charset=utf-8")
 	c.Header("Content-Type", "text/html; charset=utf-8")
 }
+
+type engine struct {
+	*server.Hertz
+}
+
+func (e *engine) wrapHandleFunc(httpMethod, relativePath, routeName string, handlers ...app.HandlerFunc) {
+	setRouteName(httpMethod, relativePath, routeName)
+	e.Handle(httpMethod, relativePath, handlers...)
+}
