@@ -20,7 +20,16 @@ import (
 
 var enablePprof = flag.Bool("pprof", false, "open/close pprof")
 
-func Init() *server.Hertz {
+type Engine struct {
+	*server.Hertz
+}
+
+func (e *Engine) wrapHandleFunc(httpMethod, relativePath, routeName string, handlers ...app.HandlerFunc) {
+	setRouteName(httpMethod, relativePath, routeName)
+	e.Handle(httpMethod, relativePath, handlers...)
+}
+
+func Init() *Engine {
 	flag.Parse()
 	hlog.SetSilentMode(true)
 	h := server.New(
@@ -37,7 +46,7 @@ func Init() *server.Hertz {
 
 	initRouter(h)
 
-	return h
+	return &Engine{Hertz: h}
 }
 
 // initRouter init all routers
@@ -71,13 +80,4 @@ func noMethod(_ context.Context, _ *app.RequestContext) {}
 func header(_ context.Context, c *app.RequestContext) {
 	c.Request.Header.Add("Content-Type", "text/html; charset=utf-8")
 	c.Header("Content-Type", "text/html; charset=utf-8")
-}
-
-type engine struct {
-	*server.Hertz
-}
-
-func (e *engine) wrapHandleFunc(httpMethod, relativePath, routeName string, handlers ...app.HandlerFunc) {
-	setRouteName(httpMethod, relativePath, routeName)
-	e.Handle(httpMethod, relativePath, handlers...)
 }
